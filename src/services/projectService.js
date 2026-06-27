@@ -11,24 +11,22 @@ export async function getProjects() {
       skipEmptyLines: true,
 
       complete: (results) => {
-        console.log(results.data);
-
         const projects = results.data.map((row) => ({
           id: Number(row.ID),
           title: row.Title,
           plant: row.Plant,
           domain: row.Domain,
-          technology: row.Technology,
           description: row.Description,
 
           video: `https://drive.google.com/file/d/${row.VideoID}/preview`,
 
-          thumbnail: row.ThumbnailID,
+          // Original sheet stores only the Drive File ID
+          thumbnail: row.Thumbnail,
 
           featured:
             String(row.Featured).trim().toUpperCase() === "TRUE",
 
-          sortOrder: Number(row.SortOrder),
+          sortOrder: Number(row["Sort order"]),
 
           status: row.Status,
         }));
