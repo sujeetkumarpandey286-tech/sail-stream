@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { Play, Factory, Cpu } from "lucide-react";
+import { Play, Factory, Layers } from "lucide-react";
 
 export default function FeaturedHero({ project }) {
   const navigate = useNavigate();
@@ -11,56 +11,120 @@ export default function FeaturedHero({ project }) {
     : null;
 
   return (
-    <section className="relative mb-10 overflow-hidden rounded-3xl border border-slate-800 bg-slate-900">
+    <section className="relative mb-12 overflow-hidden rounded-[32px] border border-sky-500/10 bg-[#07111F] shadow-2xl">
+
+      {/* Background */}
+
       {thumbnail && (
         <img
           src={thumbnail}
           alt={project.title}
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover transition duration-[3000ms] hover:scale-105"
         />
       )}
 
-      <div className="absolute inset-0 bg-gradient-to-r from-[#08111F] via-[#08111F]/90 to-[#08111F]/35" />
+      {/* Overlay */}
 
-      <div className="relative z-10 flex min-h-[420px] max-w-3xl flex-col justify-center px-10 py-12">
+      <div className="absolute inset-0 bg-gradient-to-r from-[#050B16] via-[#07111F]/92 to-[#07111F]/30" />
 
-        <span className="mb-4 w-fit rounded-full bg-sky-500/20 px-4 py-2 text-sm font-semibold tracking-wide text-sky-300">
-          FEATURED INITIATIVE
-        </span>
+      <div className="absolute inset-0 bg-gradient-to-t from-[#050B16] via-transparent to-transparent" />
 
-        <h1 className="text-5xl font-bold leading-tight text-white">
+      {/* Decorative Glow */}
+
+      <div className="absolute -left-40 top-1/2 h-[420px] w-[420px] -translate-y-1/2 rounded-full bg-sky-500/10 blur-[120px]" />
+
+      {/* Content */}
+
+      <div className="relative z-10 flex min-h-[540px] max-w-[760px] flex-col justify-center px-14 py-16">
+
+        {/* Badge */}
+
+        <div className="mb-6">
+
+          <span className="rounded-full border border-sky-400/20 bg-sky-500/15 px-5 py-2 text-sm font-semibold tracking-[0.2em] text-sky-300">
+
+            ★ FEATURED INITIATIVE
+
+          </span>
+
+        </div>
+
+        {/* Title */}
+
+        <h1 className="text-6xl font-black leading-[1.05] tracking-tight text-white">
+
           {project.title}
+
         </h1>
 
-        <div className="mt-6 flex flex-wrap gap-6 text-slate-300">
+        {/* Meta */}
 
-          <div className="flex items-center gap-2">
+        <div className="mt-7 flex flex-wrap gap-5">
+
+          <div className="flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-slate-300 backdrop-blur">
+
             <Factory size={18} />
+
             <span>{project.plant}</span>
+
           </div>
 
-          <div className="flex items-center gap-2">
-            <Cpu size={18} />
+          <div className="flex items-center gap-2 rounded-full bg-white/5 px-4 py-2 text-slate-300 backdrop-blur">
+
+            <Layers size={18} />
+
             <span>{project.domain}</span>
+
+          </div>
+
+          <div className="rounded-full bg-emerald-500/20 px-4 py-2 font-medium text-emerald-300">
+
+            {project.status}
+
           </div>
 
         </div>
 
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+        {/* Description */}
+
+        <p className="mt-8 max-w-[680px] text-xl leading-9 text-slate-300">
+
           {project.description}
+
         </p>
 
-        <div className="mt-8">
+        {/* Buttons */}
+
+        <div className="mt-10 flex gap-4">
+
           <button
             onClick={() => navigate(`/project/${project.id}`)}
-            className="flex items-center gap-3 rounded-xl bg-sky-600 px-6 py-4 text-lg font-semibold text-white transition hover:bg-sky-500"
+            className="group flex items-center gap-3 rounded-2xl bg-sky-600 px-8 py-4 text-lg font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-sky-500"
           >
-            <Play fill="currentColor" size={22} />
+
+            <Play
+              fill="currentColor"
+              size={22}
+              className="transition group-hover:scale-110"
+            />
+
             Watch Now
+
           </button>
+
+          <button
+            onClick={() => navigate(`/project/${project.id}`)}
+            className="rounded-2xl border border-white/10 bg-white/5 px-8 py-4 text-lg text-white backdrop-blur transition hover:border-sky-400/40 hover:bg-white/10"
+          >
+
+            View Details
+
+          </button>
+
         </div>
 
       </div>
+
     </section>
   );
 }
