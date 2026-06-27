@@ -1,20 +1,52 @@
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import projects from "../data/projects";
+import { getProjects } from "../services/projectService";
 import "../App.css";
 
 function ProjectDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const project = projects.find((p) => p.id === Number(id));
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const relatedProjects = projects
-    .filter((p) => p.id !== Number(id))
-    .slice(0, 3);
+  useEffect(() => {
+    async function load() {
+      const data = await getProjects();
+      setProjects(data);
+      setLoading(false);
+    }
+
+    load();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="app">
+        <h2 style={{ color: "white", textAlign: "center", marginTop: "100px" }}>
+          Loading...
+        </h2>
+      </div>
+    );
+  }
+
+  const project = projects.find(
+    (p) => p.id === Number(id)
+  );
 
   if (!project) {
-    return <h1 style={{ color: "white" }}>Project not found</h1>;
+    return (
+      <div className="app">
+        <h1 style={{ color: "white" }}>
+          Project not found
+        </h1>
+      </div>
+    );
   }
+
+  const relatedProjects = projects
+    .filter((p) => p.id !== project.id)
+    .slice(0, 3);
 
   return (
     <div className="app">
@@ -94,7 +126,9 @@ function ProjectDetails() {
           {relatedProjects.map((item) => (
             <div
               key={item.id}
-              onClick={() => navigate(`/project/${item.id}`)}
+              onClick={() =>
+                navigate(`/project/${item.id}`)
+              }
               style={{
                 background: "#111827",
                 padding: "20px",
@@ -104,9 +138,18 @@ function ProjectDetails() {
               }}
             >
               <h3>{item.title}</h3>
-              <p style={{ color: "#94A3B8" }}>{item.domain}</p>
+
+              <p
+                style={{
+                  color: "#94A3B8",
+                }}
+              >
+                {item.domain}
+              </p>
+
             </div>
           ))}
+
         </div>
 
       </div>

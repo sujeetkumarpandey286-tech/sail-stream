@@ -1,14 +1,26 @@
-import projects from "../data/projects";
+import { useEffect, useState } from "react";
+import { getProjects } from "../services/projectService";
 
 function Stats() {
+
+    const [projects, setProjects] = useState([]);
+
+    useEffect(() => {
+        async function loadProjects() {
+            const data = await getProjects();
+            setProjects(data);
+        }
+
+        loadProjects();
+    }, []);
 
     const projectCount = projects.length;
 
     const plantCount =
-        new Set(projects.map(p => p.plant)).size;
+        new Set(projects.map((p) => p.plant)).size;
 
     const domainCount =
-        new Set(projects.map(p => p.domain)).size;
+        new Set(projects.map((p) => p.domain)).size;
 
     return (
 
