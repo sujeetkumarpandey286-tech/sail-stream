@@ -5,7 +5,7 @@ const SHEET_URL =
 
 export async function getProjects() {
   return new Promise((resolve, reject) => {
-    Papa.parse(SHEET_URL, {
+    Papa.parse(`${SHEET_URL}&t=${Date.now()}`, {
       download: true,
       header: true,
       skipEmptyLines: true,
